@@ -3,3 +3,4 @@ output
 doc/tmp
 *.out
 .idea
+.vscode
