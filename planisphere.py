@@ -43,10 +43,11 @@ arguments = fetch_command_line_arguments()
 theme = arguments['theme']
 
 # Render planisphere in all available languages
-for language in text.text:
-
+language = "en"
+with open("people.txt") as fp:
+    for guest_name in fp.readlines():
     # Render climates for latitudes at 5-degree spacings from 10 deg -- 85 deg, plus 52N
-    for latitude in list(range(-80, 90, 5)) + [52]:
+    #for latitude in list(range(-80, 90, 5)) + [52]:
 
         # Do not make equatorial planispheres, as they don't really work
         if -10 < latitude < 10:
@@ -68,28 +69,35 @@ for language in text.text:
         settings = {
             'language': language,
             'latitude': latitude,
-            'theme': theme
+            'theme': theme,
+            'guest_name': guest_name
         }
 
         # Render the various parts of the planisphere
         StarWheel(settings=settings).render_all_formats(
-            filename="{dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}".format(**subs)
+            filename="{dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}".format(
+                **subs)
         )
 
         Holder(settings=settings).render_all_formats(
-            filename="{dir_parts}/holder_{abs_lat:02d}{ns}_{lang}".format(**subs)
+            filename="{dir_parts}/holder_{abs_lat:02d}{ns}_{lang}".format(
+                **subs)
         )
 
         AltAzGrid(settings=settings).render_all_formats(
-            filename="{dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}".format(**subs)
+            filename="{dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}".format(
+                **subs)
         )
 
         # Copy the PDF versions of the components of this astrolabe into LaTeX's working directory, to produce a
         # PDF file containing all the parts of this astrolabe
         os.system("mkdir -p doc/tmp")
-        os.system("cp {dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/starwheel.pdf".format(**subs))
-        os.system("cp {dir_parts}/holder_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/holder.pdf".format(**subs))
-        os.system("cp {dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/altaz.pdf".format(**subs))
+        os.system(
+            "cp {dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/starwheel.pdf".format(**subs))
+        os.system(
+            "cp {dir_parts}/holder_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/holder.pdf".format(**subs))
+        os.system(
+            "cp {dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/altaz.pdf".format(**subs))
 
         with open("doc/tmp/lat.tex", "wt") as f:
             f.write(r"${abs_lat:d}^\circ${ns}".format(**subs))
@@ -99,7 +107,8 @@ for language in text.text:
 
         # Build LaTeX documentation
         for build_pass in range(3):
-            subprocess.check_output("cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs), shell=True)
+            subprocess.check_output(
+                "cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs), shell=True)
 
         os.system("mv doc/planisphere{lang_short}.pdf "
                   "{dir_out}/planisphere_{abs_lat:02d}{ns}_{lang}.pdf".format(**subs))

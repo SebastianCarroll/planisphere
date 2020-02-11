@@ -225,7 +225,7 @@ class Holder(BaseComponent):
         if latitude < 56:
             # Big bold title
             context.set_font_size(3.0)
-            txt = text[language]['title']
+            txt = text[language]['title'].format(guest_name=settings['guest_name'])
             context.set_font_style(bold=True)
             context.text(
                 text="%s %d\u00B0%s" % (txt, latitude, "N" if not is_southern else "S"),
