@@ -46,69 +46,73 @@ theme = arguments['theme']
 for language in text.text:
 
     # Render climates for latitudes at 5-degree spacings from 10 deg -- 85 deg, plus 52N
-    #for latitude in list(range(-80, 90, 5)) + [52]:
+    # for latitude in list(range(-80, 90, 5)) + [52]:
     for latitude in [52]:
+        for name in ["Milky", "Si", "Oliver"]:
+            # Boolean flag for which hemiphere we're in
+            southern = latitude < 0
 
-        # Do not make equatorial planispheres, as they don't really work
-        if -10 < latitude < 10:
-            continue
+            # A dictionary of common substitutions
+            subs = {
+                "dir_parts": "output/planisphere_parts",
+                "dir_out": "output/planispheres",
+                "abs_lat": abs(latitude),
+                "ns": "S" if southern else "N",
+                "lang": language,
+                "lang_short": "" if language == "en" else "_{}".format(language)
+            }
 
-        # Boolean flag for which hemiphere we're in
-        southern = latitude < 0
+            settings = {
+                'language': language,
+                'latitude': latitude,
+                'theme': theme,
+                'name': name
+            }
 
-        # A dictionary of common substitutions
-        subs = {
-            "dir_parts": "output/planisphere_parts",
-            "dir_out": "output/planispheres",
-            "abs_lat": abs(latitude),
-            "ns": "S" if southern else "N",
-            "lang": language,
-            "lang_short": "" if language == "en" else "_{}".format(language)
-        }
+            # Render the various parts of the planisphere
+            StarWheel(settings=settings).render_all_formats(
+                filename="{dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}".format(
+                    **subs)
+            )
 
-        settings = {
-            'language': language,
-            'latitude': latitude,
-            'theme': theme
-        }
+            Holder(settings=settings).render_all_formats(
+                filename="{dir_parts}/holder_{abs_lat:02d}{ns}_{lang}".format(
+                    **subs)
+            )
 
-        # Render the various parts of the planisphere
-        StarWheel(settings=settings).render_all_formats(
-            filename="{dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}".format(**subs)
-        )
+            AltAzGrid(settings=settings).render_all_formats(
+                filename="{dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}".format(
+                    **subs)
+            )
 
-        Holder(settings=settings).render_all_formats(
-            filename="{dir_parts}/holder_{abs_lat:02d}{ns}_{lang}".format(**subs)
-        )
+            # Copy the PDF versions of the components of this astrolabe into LaTeX's working directory, to produce a
+            # PDF file containing all the parts of this astrolabe
+            os.system("mkdir -p doc/tmp")
+            os.system(
+                "cp {dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/starwheel.pdf".format(**subs))
+            os.system(
+                "cp {dir_parts}/holder_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/holder.pdf".format(**subs))
+            os.system(
+                "cp {dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/altaz.pdf".format(**subs))
 
-        AltAzGrid(settings=settings).render_all_formats(
-            filename="{dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}".format(**subs)
-        )
+            with open("doc/tmp/lat.tex", "wt") as f:
+                f.write(r"${abs_lat:d}^\circ${ns}".format(**subs))
 
-        # Copy the PDF versions of the components of this astrolabe into LaTeX's working directory, to produce a
-        # PDF file containing all the parts of this astrolabe
-        os.system("mkdir -p doc/tmp")
-        os.system("cp {dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/starwheel.pdf".format(**subs))
-        os.system("cp {dir_parts}/holder_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/holder.pdf".format(**subs))
-        os.system("cp {dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/altaz.pdf".format(**subs))
+            # Wait for cairo to wake up and close the files
+            time.sleep(1)
 
-        with open("doc/tmp/lat.tex", "wt") as f:
-            f.write(r"${abs_lat:d}^\circ${ns}".format(**subs))
+            # Build LaTeX documentation
+            for build_pass in range(3):
+                subprocess.check_output(
+                    "cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs), shell=True)
 
-        # Wait for cairo to wake up and close the files
-        time.sleep(1)
+            os.system("mv doc/planisphere{lang_short}.pdf "
+                    "{dir_out}/planisphere_{abs_lat:02d}{ns}_{lang}.pdf".format(**subs))
 
-        # Build LaTeX documentation
-        for build_pass in range(3):
-            subprocess.check_output("cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs), shell=True)
+            # For the English language planisphere, create a symlink with no language suffix in the filename
+            if language == "en":
+                os.system("ln -s planisphere_{abs_lat:02d}{ns}_en.pdf "
+                        "{dir_out}/planisphere_{abs_lat:02d}{ns}.pdf".format(**subs))
 
-        os.system("mv doc/planisphere{lang_short}.pdf "
-                  "{dir_out}/planisphere_{abs_lat:02d}{ns}_{lang}.pdf".format(**subs))
-
-        # For the English language planisphere, create a symlink with no language suffix in the filename
-        if language == "en":
-            os.system("ln -s planisphere_{abs_lat:02d}{ns}_en.pdf "
-                      "{dir_out}/planisphere_{abs_lat:02d}{ns}.pdf".format(**subs))
-
-        # Clean up the rubbish that LaTeX leaves behind
-        os.system("cd doc ; rm -f *.aux *.log *.dvi *.ps *.pdf")
+            # Clean up the rubbish that LaTeX leaves behind
+            os.system("cd doc ; rm -f *.aux *.log *.dvi *.ps *.pdf")
