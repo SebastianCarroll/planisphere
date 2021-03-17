@@ -235,11 +235,11 @@ class Holder(BaseComponent):
             context.set_font_style(bold=False)
 
             # First column of instructions
-            context.set_font_size(2)
-            context.text(
-                text="1",
-                x=-5.0 * unit_cm, y=-4.0 * unit_cm,
-                h_align=0, v_align=0, gap=0, rotation=0)
+            # context.set_font_size(2)
+            # context.text(
+            #     text="1",
+            #     x=-5.0 * unit_cm, y=-4.0 * unit_cm,
+            #     h_align=0, v_align=0, gap=0, rotation=0)
             context.set_font_size(1)
             context.text_wrapped(
                 text=text[language]['instructions_1'],
@@ -247,28 +247,28 @@ class Holder(BaseComponent):
                 h_align=0, v_align=1, rotation=0)
 
             # Second column of instructions
-            context.set_font_size(2)
-            context.text(
-                text="2",
-                x=0, y=-4.0 * unit_cm,
-                h_align=0, v_align=0, gap=0, rotation=0)
-            context.set_font_size(1)
-            context.text_wrapped(
-                text=text[language]['instructions_2'].format(cardinal="north" if not is_southern else "south"),
-                x=0, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
-                h_align=0, v_align=1, rotation=0)
+            # context.set_font_size(2)
+            # context.text(
+            #     text="2",
+            #     x=0, y=-4.0 * unit_cm,
+            #     h_align=0, v_align=0, gap=0, rotation=0)
+            # context.set_font_size(1)
+            # context.text_wrapped(
+            #     text=text[language]['instructions_2'].format(cardinal="north" if not is_southern else "south"),
+            #     x=0, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
+            #     h_align=0, v_align=1, rotation=0)
 
-            # Third column of instructions
-            context.set_font_size(2)
-            context.text(
-                text="3",
-                x=5.0 * unit_cm, y=-4.0 * unit_cm,
-                h_align=0, v_align=0, gap=0, rotation=0)
-            context.set_font_size(1)
-            context.text_wrapped(
-                text=text[language]['instructions_3'],
-                x=5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
-                h_align=0, v_align=1, rotation=0)
+            # # Third column of instructions
+            # context.set_font_size(2)
+            # context.text(
+            #     text="3",
+            #     x=5.0 * unit_cm, y=-4.0 * unit_cm,
+            #     h_align=0, v_align=0, gap=0, rotation=0)
+            # context.set_font_size(1)
+            # context.text_wrapped(
+            #     text=text[language]['instructions_3'],
+            #     x=5.0 * unit_cm, y=-3.4 * unit_cm, width=4.5 * unit_cm, justify=-1,
+            #     h_align=0, v_align=1, rotation=0)
         else:
             # For planispheres for use at high latitudes, we don't have much space, so don't show instructions.
             # We just display a big bold title
