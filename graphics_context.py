@@ -252,7 +252,7 @@ class GraphicsContext:
         self.font_size = font_size
         self.context.set_font_size(font_size * self.base_font_size)
 
-    def set_font_style(self, italic=None, bold=None):
+    def set_font_style(self, family="FreeSerif", italic=None, bold=None):
         """
         Sets the font style (i.e. bold or italic) used.
         :param italic:
@@ -266,8 +266,9 @@ class GraphicsContext:
             self.font_italic = italic
         if bold is not None:
             self.font_bold = bold
-
-        self.context.select_font_face(family="Steelworks Vintage Demo",
+        print("Setting font to " + family)
+        # self.context.select_font_face(family="Steelworks Vintage Demo",
+        self.context.select_font_face(family=family,
                                       slant=cairo.FONT_SLANT_ITALIC if self.font_italic else cairo.FONT_SLANT_NORMAL,
                                       weight=cairo.FONT_WEIGHT_BOLD if self.font_bold else cairo.FONT_SLANT_NORMAL
                                       )

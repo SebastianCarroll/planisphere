@@ -225,13 +225,13 @@ class Holder(BaseComponent):
         # For latitudes not too close to the pole, we have enough space to fit instructions onto the planisphere
         if latitude < 56:
             # Big bold title
-            context.set_font_size(3.0)
-            txt = text[language]['title']  
-            context.set_font_style(bold=True)
+            context.set_font_size(5.0)
+            context.set_font_style(family="Steelworks Vintage Demo", bold=False)
             context.text(
-                text="%s" % (guest_name),
+                text=guest_name,
                 x=0, y=-4.8 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
+
             context.set_font_style(bold=False)
 
             # First column of instructions

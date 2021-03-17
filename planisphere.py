@@ -48,7 +48,8 @@ for language in text.text:
     # Render climates for latitudes at 5-degree spacings from 10 deg -- 85 deg, plus 52N
     # for latitude in list(range(-80, 90, 5)) + [52]:
     for latitude in [52]:
-        for name in ["Milky", "Si", "Oliver"]:
+        # for name in ["Milky", "Si", "Oliver"]:
+        for name in ["Oliver"]:
             # Boolean flag for which hemiphere we're in
             southern = latitude < 0
 
