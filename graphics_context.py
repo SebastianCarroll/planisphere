@@ -267,7 +267,7 @@ class GraphicsContext:
         if bold is not None:
             self.font_bold = bold
 
-        self.context.select_font_face(family="FreeSerif",
+        self.context.select_font_face(family="Steelworks Vintage Demo",
                                       slant=cairo.FONT_SLANT_ITALIC if self.font_italic else cairo.FONT_SLANT_NORMAL,
                                       weight=cairo.FONT_WEIGHT_BOLD if self.font_bold else cairo.FONT_SLANT_NORMAL
                                       )
