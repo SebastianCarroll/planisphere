@@ -43,7 +43,8 @@ arguments = fetch_command_line_arguments()
 theme = arguments['theme']
 
 # Render planisphere in all available languages
-for language in text.text:
+# for language in text.text:
+for language in ["en"]:
 
     # Render climates for latitudes at 5-degree spacings from 10 deg -- 85 deg, plus 52N
     # for latitude in list(range(-80, 90, 5)) + [52]:

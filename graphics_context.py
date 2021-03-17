@@ -266,7 +266,7 @@ class GraphicsContext:
             self.font_italic = italic
         if bold is not None:
             self.font_bold = bold
-        print("Setting font to " + family)
+
         # self.context.select_font_face(family="Steelworks Vintage Demo",
         self.context.select_font_face(family=family,
                                       slant=cairo.FONT_SLANT_ITALIC if self.font_italic else cairo.FONT_SLANT_NORMAL,
