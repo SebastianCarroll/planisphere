@@ -22,7 +22,13 @@ text = {
     "en":
         {
             "title": "Becky&Seb",
-            "instructions_1": "Be amazed at how awesome this is",
+            "instructions_1": """We cannot tell you how happy we are to be able to celebrate our marriage with you today, especially after the year we have all had! Thank you so much for coming and sharing today with us.
+
+If you get a moment later this evening, take this planisphere and look to the skies - it's tailored (coded) to our very location.
+
+Thank you so much again for celebrating with us.
+
+Becky & Seb x """,
             "instructions_2": "Feel bad you lack the skills to do this",
             "instructions_3": "#code club",
             "instructions_4": (
