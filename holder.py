@@ -246,6 +246,12 @@ class Holder(BaseComponent):
                 x=0 * unit_cm, y=-2.8 * unit_cm, width=10 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 
+            context.set_font_size(1)
+            context.text_wrapped(
+                text=text[language]['instructions_2'],
+                x=0 * unit_cm, y=-3.8 * unit_cm, width=10 * unit_cm, justify=-1,
+                h_align=0, v_align=1, rotation=0)
+
             # Second column of instructions
             # context.set_font_size(2)
             # context.text(

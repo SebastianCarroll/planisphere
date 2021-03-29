@@ -26,10 +26,8 @@ text = {
 
 If you get a moment later this evening, take this planisphere and look to the skies - it's tailored (coded) to our very location.
 
-Thank you so much again for celebrating with us.
-
-Becky & Seb x """,
-            "instructions_2": "Feel bad you lack the skills to do this",
+Thank you so much again for celebrating with us.""",
+            "instructions_2": "Becky & Seb x",
             "instructions_3": "#code club",
             "instructions_4": (
                 r"A planisphere is a simple hand-held device which shows a map of which stars are visible in the night sky at any particular time. By rotating the star wheel, it shows how stars move across the sky through the night, and how different constellations are visible at different times of year.",
