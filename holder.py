@@ -232,25 +232,26 @@ class Holder(BaseComponent):
                 x=0, y=-4.2 * unit_cm,
                 h_align=0, v_align=0, gap=0, rotation=0)
 
-            context.set_font_style(bold=False)
-
             # First column of instructions
             # context.set_font_size(2)
             # context.text(
             #     text="1",
             #     x=-5.0 * unit_cm, y=-4.0 * unit_cm,
             #     h_align=0, v_align=0, gap=0, rotation=0)
-            context.set_font_size(1)
+            context.set_font_size(1.1)
             context.text_wrapped(
                 text=text[language]['instructions_1'],
-                x=0 * unit_cm, y=-2.8 * unit_cm, width=10 * unit_cm, justify=-1,
+                x=0 * unit_cm, y=-2.8 * unit_cm, width=11 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
 
-            context.set_font_size(1)
+            context.set_font_size(1.5)
             context.text_wrapped(
                 text=text[language]['instructions_2'],
-                x=0 * unit_cm, y=-3.8 * unit_cm, width=10 * unit_cm, justify=-1,
+                x=0.1 * unit_cm, y=-1.0 * unit_cm, width=10 * unit_cm, justify=-1,
                 h_align=0, v_align=1, rotation=0)
+
+            # Reset font to previous style
+            context.set_font_style(bold=False)
 
             # Second column of instructions
             # context.set_font_size(2)
@@ -296,8 +297,8 @@ class Holder(BaseComponent):
 
         # Display web link and copyright text
         txt = text[language]['more_info']
-        context.set_font_size(0.9)
-        context.text(text=txt, x=0, y=-0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=0)
+        #context.set_font_size(0.9)
+        #context.text(text=txt, x=0, y=-0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=0)
         context.set_font_size(0.9)
         context.text(text=txt, x=0, y=0.5 * unit_cm, h_align=0, v_align=0, gap=0, rotation=pi)
 
