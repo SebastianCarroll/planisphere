@@ -50,7 +50,7 @@ for language in ["en"]:
     # for latitude in list(range(-80, 90, 5)) + [52]:
     for latitude in [52]:
         # for name in ["Milky", "Si", "Oliver"]:
-        for name in ["Oliver"]:
+        for name in text.text[language]["names"]:
             # Boolean flag for which hemiphere we're in
             southern = latitude < 0
 
@@ -61,7 +61,8 @@ for language in ["en"]:
                 "abs_lat": abs(latitude),
                 "ns": "S" if southern else "N",
                 "lang": language,
-                "lang_short": "" if language == "en" else "_{}".format(language)
+                "lang_short": "" if language == "en" else "_{}".format(language),
+                "name": name
             }
 
             settings = {
@@ -82,20 +83,25 @@ for language in ["en"]:
                     **subs)
             )
 
-            AltAzGrid(settings=settings).render_all_formats(
-                filename="{dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}".format(
-                    **subs)
-            )
+            # Commenting: No longer need grid
+            # AltAzGrid(settings=settings).render_all_formats(
+            #     filename="{dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}".format(
+            #         **subs)
+            # )
 
             # Copy the PDF versions of the components of this astrolabe into LaTeX's working directory, to produce a
             # PDF file containing all the parts of this astrolabe
             os.system("mkdir -p doc/tmp")
             os.system(
-                "cp {dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/starwheel.pdf".format(**subs))
+                "cp {dir_parts}/starwheel_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/starwheel.pdf"
+                .format(**subs)
+                )
             os.system(
                 "cp {dir_parts}/holder_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/holder.pdf".format(**subs))
-            os.system(
-                "cp {dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/altaz.pdf".format(**subs))
+
+            # Commented - def won't use this part
+            #os.system(
+            #    "cp {dir_parts}/alt_az_grid_{abs_lat:02d}{ns}_{lang}.pdf doc/tmp/altaz.pdf".format(**subs))
 
             with open("doc/tmp/lat.tex", "wt") as f:
                 f.write(r"${abs_lat:d}^\circ${ns}".format(**subs))
@@ -108,13 +114,15 @@ for language in ["en"]:
                 subprocess.check_output(
                     "cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs), shell=True)
 
-            os.system("mv doc/planisphere{lang_short}.pdf "
-                    "{dir_out}/planisphere_{abs_lat:02d}{ns}_{lang}.pdf".format(**subs))
+            infile = "doc/planisphere{lang_short}.pdf".format(**subs)
+            outfile = "{dir_out}/planisphere_{name}{abs_lat:02d}{ns}_{lang}.pdf".format(**subs)
+            os.system("mv " + infile +" "+outfile)
 
             # For the English language planisphere, create a symlink with no language suffix in the filename
-            if language == "en":
-                os.system("ln -s planisphere_{abs_lat:02d}{ns}_en.pdf "
-                        "{dir_out}/planisphere_{abs_lat:02d}{ns}.pdf".format(**subs))
+            # Commented. Not using any other language now so no need to link
+            #if language == "en":
+            #    os.system("ln -s planisphere_{abs_lat:02d}{ns}_en.pdf "
+            #            "{dir_out}/planisphere_{abs_lat:02d}{ns}.pdf".format(**subs))
 
             # Clean up the rubbish that LaTeX leaves behind
             os.system("cd doc ; rm -f *.aux *.log *.dvi *.ps *.pdf")

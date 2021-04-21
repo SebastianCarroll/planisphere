@@ -4,3 +4,7 @@ doc/tmp
 *.out
 .idea
 .vscode/
+doc/planisphere.aux
+doc/planisphere.log
+doc/planisphere.pdf
+doc/planisphere.synctex.gz

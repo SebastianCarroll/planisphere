@@ -126,9 +126,6 @@ INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT /home/carseb/workspace/planisphere/doc/tmp/holder.pdf
 INPUT /home/carseb/workspace/planisphere/doc/tmp/holder.pdf
 INPUT /home/carseb/workspace/planisphere/doc/tmp/holder.pdf
-INPUT /home/carseb/workspace/planisphere/doc/tmp/altaz.pdf
-INPUT /home/carseb/workspace/planisphere/doc/tmp/altaz.pdf
-INPUT /home/carseb/workspace/planisphere/doc/tmp/altaz.pdf
 INPUT /home/carseb/workspace/planisphere/doc/planisphere.aux
 INPUT /home/carseb/workspace/planisphere/doc/planisphere.out
 INPUT /home/carseb/workspace/planisphere/doc/planisphere.out
