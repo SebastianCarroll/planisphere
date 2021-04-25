@@ -115,7 +115,7 @@ for language in ["en"]:
                     "cd doc ; pdflatex planisphere{lang_short}.tex".format(**subs), shell=True)
 
             infile = "doc/planisphere{lang_short}.pdf".format(**subs)
-            outfile = "{dir_out}/planisphere_{name}{abs_lat:02d}{ns}_{lang}.pdf".format(**subs)
+            outfile = "{dir_out}/{name}.pdf".format(**subs)
             os.system("mv " + infile +" "+outfile)
 
             # For the English language planisphere, create a symlink with no language suffix in the filename
